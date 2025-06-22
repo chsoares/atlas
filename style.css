@@ -1,0 +1,23 @@
+/* Ajusta a largura máxima do container principal no modo centered */
+.block-container {
+    max-width: 1200px;
+    padding-left: 4rem;
+    padding-top: 5rem;
+}
+
+/* Estilos para imagens */
+img {
+    max-height: 450px;
+    width: auto;
+    max-width: 100%;
+    margin: 1em auto;
+}
+
+/* Estilos para tabelas */
+table {
+    font-size: 90%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+} 

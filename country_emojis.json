@@ -1,0 +1,82 @@
+{
+  "Brasil": {
+    "emoji": "🇧🇷",
+    "iso": "BRA"
+  },
+  "Estados Unidos": {
+    "emoji": "🇺🇸",
+    "iso": "USA"
+  },
+  "Rússia": {
+    "emoji": "🇷🇺",
+    "iso": "RUS"
+  },
+  "China": {
+    "emoji": "🇨🇳",
+    "iso": "CHN"
+  },
+  "Índia": {
+    "emoji": "🇮🇳",
+    "iso": "IND"
+  },
+  "Japão": {
+    "emoji": "🇯🇵",
+    "iso": "JPN"
+  },
+  "Alemanha": {
+    "emoji": "🇩🇪",
+    "iso": "DEU"
+  },
+  "França": {
+    "emoji": "🇫🇷",
+    "iso": "FRA"
+  },
+  "Reino Unido": {
+    "emoji": "🇬🇧",
+    "iso": "GBR"
+  },
+  "Itália": {
+    "emoji": "🇮🇹",
+    "iso": "ITA"
+  },
+  "Canadá": {
+    "emoji": "🇨🇦",
+    "iso": "CAN"
+  },
+  "Austrália": {
+    "emoji": "🇦🇺",
+    "iso": "AUS"
+  },
+  "Coreia do Sul": {
+    "emoji": "🇰🇷",
+    "iso": "KOR"
+  },
+  "México": {
+    "emoji": "🇲🇽",
+    "iso": "MEX"
+  },
+  "Turquia": {
+    "emoji": "🇹🇷",
+    "iso": "TUR"
+  },
+  "Arábia Saudita": {
+    "emoji": "🇸🇦",
+    "iso": "SAU"
+  },
+  "Irã": {
+    "emoji": "🇮🇷",
+    "iso": "IRN"
+  },
+  "Egito": {
+    "emoji": "🇪🇬",
+    "iso": "EGY"
+  },
+  "Nigéria": {
+    "emoji": "🇳🇬",
+    "iso": "NGA"
+  },
+  "África do Sul": {
+    "emoji": "🇿🇦",
+    "iso": "ZAF"
+  }
+}
