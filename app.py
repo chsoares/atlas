@@ -173,11 +173,11 @@ with tab1:
     st.caption("Resumo dos dados filtrados com estatísticas relevantes.")
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("Notícias", len(filtered_df), border=True)
+        st.metric("Notícias", f"{len(filtered_df)} itens", border=True)
     with col2:
-        st.metric("Países", len(filtered_df['pais'].unique()), border=True)
+        st.metric("Países", f"{len(filtered_df['pais'].unique())} países", border=True)
     with col3:
-        st.metric("Tags", len(set([tag for tags in filtered_df['tags'] for tag in tags])), border=True)
+        st.metric("Tags", f"{len(set([tag for tags in filtered_df['tags'] for tag in tags]))} tags", border=True)
     with col4:
         st.metric("Período", f"{(end_date.date() - start_date.date()).days + 1} dias", border=True)
     
@@ -305,11 +305,11 @@ with tab2:
     st.caption("Estatísticas gerais de todo o dataset de notícias.")
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("Notícias", len(df), border=True)
+        st.metric("Notícias", f"{len(df)} itens", border=True)
     with col2:
-        st.metric("Países", len(df['pais'].unique()), border=True)
+        st.metric("Países", f"{len(df['pais'].unique())} países", border=True)
     with col3:
-        st.metric("Tags", len(set([tag for tags in df['tags'] for tag in tags])), border=True)
+        st.metric("Tags", f"{len(set([tag for tags in df['tags'] for tag in tags]))} tags", border=True)
     with col4:
         st.metric("Período", f"{(df['data'].max().date() - df['data'].min().date()).days + 1} dias", border=True)
     
@@ -321,20 +321,51 @@ with tab2:
         # Preparar dados para o gráfico (todos os países em uma linha)
         daily_news = df.groupby('data').size().reset_index(name='count')
         
+        # Calcular limite do eixo Y (20% maior que o valor máximo)
+        max_count = daily_news['count'].max()
+        y_max = max_count * 1.2
+        
+        # Formatar datas para o eixo X (1 jan. 25)
+        daily_news['data_formatada'] = daily_news['data'].dt.strftime('%d %b. %y').str.lower()
+        
         fig_line = px.line(
             daily_news,
-            x='data',
+            x='data_formatada',
             y='count',
             title='',
-            labels={'data': 'Data', 'count': 'Notícias'},
+            labels={'data_formatada': '', 'count': ''},
             markers=True
         )
         
         fig_line.update_layout(
-            xaxis_title="",
-            yaxis_title="",
+            showlegend=False,
+            height=300,
+            margin=dict(l=0, r=0, t=30, b=0),
             hovermode='x unified',
-            height=300
+            plot_bgcolor="white",
+            xaxis=dict(
+                showgrid=False, 
+                showspikes=False,
+                title=None,
+                tickangle=0,
+                nticks=8  # Limitar o número de ticks para espaçamento adequado
+            ),
+            yaxis=dict(
+                showspikes=False,
+                showgrid=True,
+                gridcolor="lightgray",
+                gridwidth=0.5,
+                rangemode="tozero",
+                range=[0, y_max],
+                title=None
+            ),
+        )
+        
+        # Atualizar a cor da linha para o vermelho do Streamlit e tooltip personalizado
+        fig_line.update_traces(
+            line=dict(color="#FF4B4B", width=3),
+            marker=dict(color="#FF4B4B", size=6),
+            hovertemplate="<b>%{x}</b><br>Notícias: %{y}<extra></extra>"
         )
         
         st.plotly_chart(fig_line, use_container_width=True)
@@ -380,21 +411,30 @@ with tab2:
             lambda x: country_emojis.get(x, {}).get('iso', '')
         )
         
-        fig_choropleth = px.choropleth(
-            country_counts_choropleth,
-            locations='iso_alpha',
-            color='Notícias',
-            hover_name='País',
-            color_continuous_scale='viridis',
-            title=""
+        # Criar choropleth usando go.Figure como no projeto de ransomware
+        fig_choropleth = go.Figure(
+            go.Choropleth(
+                locations=country_counts_choropleth['iso_alpha'],
+                z=country_counts_choropleth['Notícias'],
+                text="<b>" + country_counts_choropleth['País'] + "</b><br>Notícias: " + country_counts_choropleth['Notícias'].astype(str),
+                colorscale="reds",
+                marker_line_color="darkgray",
+                marker_line_width=1,
+                showscale=False,  # Remove a barra de cores
+                hovertemplate="%{text}<extra></extra>",
+            )
         )
         
         fig_choropleth.update_layout(
             geo=dict(
                 showframe=False,
                 showcoastlines=True,
-                projection_type='equirectangular'
-            )
+                coastlinecolor="darkgray",
+                coastlinewidth=1.25,
+                projection_type="equirectangular",
+            ),
+            margin=dict(t=0, b=0, l=0, r=0),
+            height=400,
         )
         
         st.plotly_chart(fig_choropleth, use_container_width=True)
