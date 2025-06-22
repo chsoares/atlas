@@ -10,7 +10,19 @@ class NewsDataGenerator:
             "Brasil", "Estados Unidos", "Rússia", "China", "Índia", 
             "Japão", "Alemanha", "França", "Reino Unido", "Itália",
             "Canadá", "Austrália", "Coreia do Sul", "México", "Turquia",
-            "Arábia Saudita", "Irã", "Egito", "Nigéria", "África do Sul"
+            "Arábia Saudita", "Irã", "Egito", "Nigéria", "África do Sul",
+            "Argentina", "Chile", "Colômbia", "Peru", "Venezuela",
+            "Espanha", "Países Baixos", "Suécia", "Noruega", "Dinamarca",
+            "Suíça", "Áustria", "Bélgica", "Polônia", "Ucrânia",
+            "República Tcheca", "Hungria", "Romênia", "Bulgária", "Grécia",
+            "Portugal", "Irlanda", "Finlândia", "Islândia", "Nova Zelândia",
+            "Singapura", "Malásia", "Tailândia", "Vietnã", "Indonésia",
+            "Filipinas", "Paquistão", "Bangladesh", "Sri Lanka", "Myanmar",
+            "Camboja", "Laos", "Mongólia", "Cazaquistão", "Uzbequistão",
+            "Quirguistão", "Tajiquistão", "Turcomenistão", "Azerbaijão", "Geórgia",
+            "Armênia", "Moldávia", "Bielorrússia", "Lituânia", "Letônia",
+            "Estônia", "Eslováquia", "Eslovênia", "Croácia", "Sérvia",
+            "Bósnia e Herzegovina", "Montenegro", "Macedônia do Norte", "Albânia", "Kosovo"
         ]
         
         self.country_emojis = {
@@ -33,7 +45,67 @@ class NewsDataGenerator:
             "Irã": {"emoji": "🇮🇷", "iso": "IRN"},
             "Egito": {"emoji": "🇪🇬", "iso": "EGY"},
             "Nigéria": {"emoji": "🇳🇬", "iso": "NGA"},
-            "África do Sul": {"emoji": "🇿🇦", "iso": "ZAF"}
+            "África do Sul": {"emoji": "🇿🇦", "iso": "ZAF"},
+            "Argentina": {"emoji": "🇦🇷", "iso": "ARG"},
+            "Chile": {"emoji": "🇨🇱", "iso": "CHL"},
+            "Colômbia": {"emoji": "🇨🇴", "iso": "COL"},
+            "Peru": {"emoji": "🇵🇪", "iso": "PER"},
+            "Venezuela": {"emoji": "🇻🇪", "iso": "VEN"},
+            "Espanha": {"emoji": "🇪🇸", "iso": "ESP"},
+            "Países Baixos": {"emoji": "🇳🇱", "iso": "NLD"},
+            "Suécia": {"emoji": "🇸🇪", "iso": "SWE"},
+            "Noruega": {"emoji": "🇳🇴", "iso": "NOR"},
+            "Dinamarca": {"emoji": "🇩🇰", "iso": "DNK"},
+            "Suíça": {"emoji": "🇨🇭", "iso": "CHE"},
+            "Áustria": {"emoji": "🇦🇹", "iso": "AUT"},
+            "Bélgica": {"emoji": "🇧🇪", "iso": "BEL"},
+            "Polônia": {"emoji": "🇵🇱", "iso": "POL"},
+            "Ucrânia": {"emoji": "🇺🇦", "iso": "UKR"},
+            "República Tcheca": {"emoji": "🇨🇿", "iso": "CZE"},
+            "Hungria": {"emoji": "🇭🇺", "iso": "HUN"},
+            "Romênia": {"emoji": "🇷🇴", "iso": "ROU"},
+            "Bulgária": {"emoji": "🇧🇬", "iso": "BGR"},
+            "Grécia": {"emoji": "🇬🇷", "iso": "GRC"},
+            "Portugal": {"emoji": "🇵🇹", "iso": "PRT"},
+            "Irlanda": {"emoji": "🇮🇪", "iso": "IRL"},
+            "Finlândia": {"emoji": "🇫🇮", "iso": "FIN"},
+            "Islândia": {"emoji": "🇮🇸", "iso": "ISL"},
+            "Nova Zelândia": {"emoji": "🇳🇿", "iso": "NZL"},
+            "Singapura": {"emoji": "🇸🇬", "iso": "SGP"},
+            "Malásia": {"emoji": "🇲🇾", "iso": "MYS"},
+            "Tailândia": {"emoji": "🇹🇭", "iso": "THA"},
+            "Vietnã": {"emoji": "🇻🇳", "iso": "VNM"},
+            "Indonésia": {"emoji": "🇮🇩", "iso": "IDN"},
+            "Filipinas": {"emoji": "🇵🇭", "iso": "PHL"},
+            "Paquistão": {"emoji": "🇵🇰", "iso": "PAK"},
+            "Bangladesh": {"emoji": "🇧🇩", "iso": "BGD"},
+            "Sri Lanka": {"emoji": "🇱🇰", "iso": "LKA"},
+            "Myanmar": {"emoji": "🇲🇲", "iso": "MMR"},
+            "Camboja": {"emoji": "🇰🇭", "iso": "KHM"},
+            "Laos": {"emoji": "🇱🇦", "iso": "LAO"},
+            "Mongólia": {"emoji": "🇲🇳", "iso": "MNG"},
+            "Cazaquistão": {"emoji": "🇰🇿", "iso": "KAZ"},
+            "Uzbequistão": {"emoji": "🇺🇿", "iso": "UZB"},
+            "Quirguistão": {"emoji": "🇰🇬", "iso": "KGZ"},
+            "Tajiquistão": {"emoji": "🇹🇯", "iso": "TJK"},
+            "Turcomenistão": {"emoji": "🇹🇲", "iso": "TKM"},
+            "Azerbaijão": {"emoji": "🇦🇿", "iso": "AZE"},
+            "Geórgia": {"emoji": "🇬🇪", "iso": "GEO"},
+            "Armênia": {"emoji": "🇦🇲", "iso": "ARM"},
+            "Moldávia": {"emoji": "🇲🇩", "iso": "MDA"},
+            "Bielorrússia": {"emoji": "🇧🇾", "iso": "BLR"},
+            "Lituânia": {"emoji": "🇱🇹", "iso": "LTU"},
+            "Letônia": {"emoji": "🇱🇻", "iso": "LVA"},
+            "Estônia": {"emoji": "🇪🇪", "iso": "EST"},
+            "Eslováquia": {"emoji": "🇸🇰", "iso": "SVK"},
+            "Eslovênia": {"emoji": "🇸🇮", "iso": "SVN"},
+            "Croácia": {"emoji": "🇭🇷", "iso": "HRV"},
+            "Sérvia": {"emoji": "🇷🇸", "iso": "SRB"},
+            "Bósnia e Herzegovina": {"emoji": "🇧🇦", "iso": "BIH"},
+            "Montenegro": {"emoji": "🇲🇪", "iso": "MNE"},
+            "Macedônia do Norte": {"emoji": "🇲🇰", "iso": "MKD"},
+            "Albânia": {"emoji": "🇦🇱", "iso": "ALB"},
+            "Kosovo": {"emoji": "🇽🇰", "iso": "XKX"}
         }
         
         self.tags = [
@@ -167,27 +239,48 @@ class NewsDataGenerator:
             current_date = start + timedelta(days=day)
             date_str = current_date.strftime("%Y-%m-%d")
             
-            # Número de notícias por dia (20-50)
-            num_news = random.randint(20, 50)
+            # Número de notícias por dia (10-50) com variação baseada em eventos
+            base_news = random.randint(10, 30)
             
-            # Selecionar países para o dia (máximo 20, um por país)
+            # Adicionar variação baseada em eventos especiais
+            # Fins de semana tendem a ter menos notícias
+            if current_date.weekday() >= 5:  # Sábado ou domingo
+                base_news = int(base_news * 0.7)
+            
+            # Eventos especiais (crises) que aumentam o número de notícias
+            if random.random() < 0.1:  # 10% de chance de crise
+                base_news = int(base_news * 2.5)
+            
+            # Picos aleatórios de atividade
+            if random.random() < 0.05:  # 5% de chance de pico
+                base_news = int(base_news * 1.8)
+            
+            # Garantir que está dentro dos limites
+            num_news = max(10, min(50, base_news))
+            
+            # Selecionar países para o dia (exatamente num_news países, um por país)
             available_countries = self.countries.copy()
             selected_countries = []
             
-            # Priorizar hotspots
+            # Priorizar hotspots com mais frequência
             for hotspot in self.hotspot_countries:
-                if hotspot in available_countries and random.random() < 0.7:  # 70% chance
+                if hotspot in available_countries and random.random() < 0.8:  # 80% chance
                     selected_countries.append(hotspot)
                     available_countries.remove(hotspot)
             
-            # Adicionar países restantes
-            while len(selected_countries) < min(num_news, len(available_countries)):
+            # Adicionar países restantes até atingir num_news
+            while len(selected_countries) < num_news:
                 if available_countries:
                     country = random.choice(available_countries)
                     selected_countries.append(country)
                     available_countries.remove(country)
                 else:
-                    break
+                    # Se acabaram os países, recomeçar a lista
+                    available_countries = self.countries.copy()
+                    # Remover países já selecionados
+                    for selected in selected_countries:
+                        if selected in available_countries:
+                            available_countries.remove(selected)
             
             # Gerar notícias para cada país selecionado
             for country in selected_countries:
@@ -203,9 +296,9 @@ class NewsDataGenerator:
                     available_tags = self.tags.copy()
                     selected_tags = []
                     
-                    # Priorizar tags hotspot
+                    # Priorizar tags hotspot com mais frequência
                     for hotspot_tag in self.hotspot_tags:
-                        if hotspot_tag in available_tags and random.random() < 0.6:  # 60% chance
+                        if hotspot_tag in available_tags and random.random() < 0.7:  # 70% chance
                             selected_tags.append(hotspot_tag)
                             available_tags.remove(hotspot_tag)
                     

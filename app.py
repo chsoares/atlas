@@ -346,8 +346,7 @@ with tab2:
                 rangemode="tozero",
                 range=[0, y_max],
                 title=None,
-                tickmode='linear',
-                dtick=1
+                nticks=6
             ),
         )
         
@@ -466,7 +465,7 @@ with tab2:
         col1, col2 = st.columns(2)
         
         with col1:
-            #st.subheader("Tag Cloud")
+            st.write("**Tag cloud**")
             wordcloud_viz = create_wordcloud(filtered_df_tags['tags'])
             
             if wordcloud_viz:
@@ -478,7 +477,7 @@ with tab2:
                 st.info("Não há dados suficientes para gerar a tag cloud.")
         
         with col2:
-            #st.subheader("Tabela de Tags")
+            st.write("**Tabela de frequências**")
             
             # Contar frequência das tags
             all_tags_filtered = []
@@ -501,8 +500,7 @@ with tab2:
             )
         
         # Nova visualização: Evolução temporal das tags
-        st.subheader("Evolução temporal das tags")
-        st.caption("Evolução do número de notícias por dia para as tags selecionadas no período filtrado.")
+        # st.write("")
         
         # Filtro múltiplo de tags para esta visualização
         all_tags_filtered = []
@@ -517,6 +515,7 @@ with tab2:
             help="Escolha até 5 tags para melhor visualização"
         )
         
+        st.write("**Evolução temporal**")
         if selected_tags_timeline:
             # Criar dataframe completo com todas as datas do período
             all_dates = pd.date_range(
@@ -598,8 +597,7 @@ with tab2:
                     rangemode="tozero",
                     range=[0, y_max],
                     title=None,
-                    tickmode='linear',
-                    dtick=1
+                    nticks=6
                 ),
             )
             

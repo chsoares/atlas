@@ -78,5 +78,245 @@
   "África do Sul": {
     "emoji": "🇿🇦",
     "iso": "ZAF"
+  },
+  "Argentina": {
+    "emoji": "🇦🇷",
+    "iso": "ARG"
+  },
+  "Chile": {
+    "emoji": "🇨🇱",
+    "iso": "CHL"
+  },
+  "Colômbia": {
+    "emoji": "🇨🇴",
+    "iso": "COL"
+  },
+  "Peru": {
+    "emoji": "🇵🇪",
+    "iso": "PER"
+  },
+  "Venezuela": {
+    "emoji": "🇻🇪",
+    "iso": "VEN"
+  },
+  "Espanha": {
+    "emoji": "🇪🇸",
+    "iso": "ESP"
+  },
+  "Países Baixos": {
+    "emoji": "🇳🇱",
+    "iso": "NLD"
+  },
+  "Suécia": {
+    "emoji": "🇸🇪",
+    "iso": "SWE"
+  },
+  "Noruega": {
+    "emoji": "🇳🇴",
+    "iso": "NOR"
+  },
+  "Dinamarca": {
+    "emoji": "🇩🇰",
+    "iso": "DNK"
+  },
+  "Suíça": {
+    "emoji": "🇨🇭",
+    "iso": "CHE"
+  },
+  "Áustria": {
+    "emoji": "🇦🇹",
+    "iso": "AUT"
+  },
+  "Bélgica": {
+    "emoji": "🇧🇪",
+    "iso": "BEL"
+  },
+  "Polônia": {
+    "emoji": "🇵🇱",
+    "iso": "POL"
+  },
+  "Ucrânia": {
+    "emoji": "🇺🇦",
+    "iso": "UKR"
+  },
+  "República Tcheca": {
+    "emoji": "🇨🇿",
+    "iso": "CZE"
+  },
+  "Hungria": {
+    "emoji": "🇭🇺",
+    "iso": "HUN"
+  },
+  "Romênia": {
+    "emoji": "🇷🇴",
+    "iso": "ROU"
+  },
+  "Bulgária": {
+    "emoji": "🇧🇬",
+    "iso": "BGR"
+  },
+  "Grécia": {
+    "emoji": "🇬🇷",
+    "iso": "GRC"
+  },
+  "Portugal": {
+    "emoji": "🇵🇹",
+    "iso": "PRT"
+  },
+  "Irlanda": {
+    "emoji": "🇮🇪",
+    "iso": "IRL"
+  },
+  "Finlândia": {
+    "emoji": "🇫🇮",
+    "iso": "FIN"
+  },
+  "Islândia": {
+    "emoji": "🇮🇸",
+    "iso": "ISL"
+  },
+  "Nova Zelândia": {
+    "emoji": "🇳🇿",
+    "iso": "NZL"
+  },
+  "Singapura": {
+    "emoji": "🇸🇬",
+    "iso": "SGP"
+  },
+  "Malásia": {
+    "emoji": "🇲🇾",
+    "iso": "MYS"
+  },
+  "Tailândia": {
+    "emoji": "🇹🇭",
+    "iso": "THA"
+  },
+  "Vietnã": {
+    "emoji": "🇻🇳",
+    "iso": "VNM"
+  },
+  "Indonésia": {
+    "emoji": "🇮🇩",
+    "iso": "IDN"
+  },
+  "Filipinas": {
+    "emoji": "🇵🇭",
+    "iso": "PHL"
+  },
+  "Paquistão": {
+    "emoji": "🇵🇰",
+    "iso": "PAK"
+  },
+  "Bangladesh": {
+    "emoji": "🇧🇩",
+    "iso": "BGD"
+  },
+  "Sri Lanka": {
+    "emoji": "🇱🇰",
+    "iso": "LKA"
+  },
+  "Myanmar": {
+    "emoji": "🇲🇲",
+    "iso": "MMR"
+  },
+  "Camboja": {
+    "emoji": "🇰🇭",
+    "iso": "KHM"
+  },
+  "Laos": {
+    "emoji": "🇱🇦",
+    "iso": "LAO"
+  },
+  "Mongólia": {
+    "emoji": "🇲🇳",
+    "iso": "MNG"
+  },
+  "Cazaquistão": {
+    "emoji": "🇰🇿",
+    "iso": "KAZ"
+  },
+  "Uzbequistão": {
+    "emoji": "🇺🇿",
+    "iso": "UZB"
+  },
+  "Quirguistão": {
+    "emoji": "🇰🇬",
+    "iso": "KGZ"
+  },
+  "Tajiquistão": {
+    "emoji": "🇹🇯",
+    "iso": "TJK"
+  },
+  "Turcomenistão": {
+    "emoji": "🇹🇲",
+    "iso": "TKM"
+  },
+  "Azerbaijão": {
+    "emoji": "🇦🇿",
+    "iso": "AZE"
+  },
+  "Geórgia": {
+    "emoji": "🇬🇪",
+    "iso": "GEO"
+  },
+  "Armênia": {
+    "emoji": "🇦🇲",
+    "iso": "ARM"
+  },
+  "Moldávia": {
+    "emoji": "🇲🇩",
+    "iso": "MDA"
+  },
+  "Bielorrússia": {
+    "emoji": "🇧🇾",
+    "iso": "BLR"
+  },
+  "Lituânia": {
+    "emoji": "🇱🇹",
+    "iso": "LTU"
+  },
+  "Letônia": {
+    "emoji": "🇱🇻",
+    "iso": "LVA"
+  },
+  "Estônia": {
+    "emoji": "🇪🇪",
+    "iso": "EST"
+  },
+  "Eslováquia": {
+    "emoji": "🇸🇰",
+    "iso": "SVK"
+  },
+  "Eslovênia": {
+    "emoji": "🇸🇮",
+    "iso": "SVN"
+  },
+  "Croácia": {
+    "emoji": "🇭🇷",
+    "iso": "HRV"
+  },
+  "Sérvia": {
+    "emoji": "🇷🇸",
+    "iso": "SRB"
+  },
+  "Bósnia e Herzegovina": {
+    "emoji": "🇧🇦",
+    "iso": "BIH"
+  },
+  "Montenegro": {
+    "emoji": "🇲🇪",
+    "iso": "MNE"
+  },
+  "Macedônia do Norte": {
+    "emoji": "🇲🇰",
+    "iso": "MKD"
+  },
+  "Albânia": {
+    "emoji": "🇦🇱",
+    "iso": "ALB"
+  },
+  "Kosovo": {
+    "emoji": "🇽🇰",
+    "iso": "XKX"
   }
 }
