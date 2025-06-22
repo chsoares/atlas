@@ -18,6 +18,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+st.title("🗺️ Atlas Diário")
+#st.caption("Visualização de acontecimentos mundiais de interesse")
+
 # Carregar CSS
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -273,30 +276,15 @@ with tab1:
     
     
     # Botão de exportação
-    if st.button("📥 Exportar Dados (CSV)"):
-        csv = filtered_df.to_csv(index=False, encoding='utf-8-sig')
-        st.download_button(
-            label="⬇️ Download CSV",
-            data=csv,
-            file_name=f"atlas_diario_{start_date.date()}_{end_date.date()}.csv",
-            mime="text/csv"
-        )
+    csv = filtered_df.to_csv(index=False, encoding='utf-8-sig')
+    st.download_button(
+        label="📥 Exportar dados (.csv)",
+        data=csv,
+        file_name=f"atlas_diario_{start_date.date()}_{end_date.date()}.csv",
+        mime="text/csv"
+    )
     
-    # Tag cloud
-    st.subheader("Tag Cloud")
-    st.caption("Visualização das tags mais frequentes no período selecionado, com tamanho proporcional à frequência.")
-    with st.container(border=True):
-        wordcloud = create_wordcloud(filtered_df['tags'])
-        
-        if wordcloud:
-            fig, ax = plt.subplots(figsize=(12, 6))
-            ax.imshow(wordcloud, interpolation='bilinear')
-            ax.axis('off')
-            st.pyplot(fig)
-        else:
-            st.info("Não há dados suficientes para gerar a tag cloud.")
-    
-
+ 
 # Aba 2: Dataviz
 with tab2:
     
@@ -357,7 +345,9 @@ with tab2:
                 gridwidth=0.5,
                 rangemode="tozero",
                 range=[0, y_max],
-                title=None
+                title=None,
+                tickmode='linear',
+                dtick=1
             ),
         )
         
@@ -365,7 +355,7 @@ with tab2:
         fig_line.update_traces(
             line=dict(color="#FF4B4B", width=3),
             marker=dict(color="#FF4B4B", size=6),
-            hovertemplate="<b>%{x}</b><br>Notícias: %{y}<extra></extra>"
+            hovertemplate="Notícias: %{y}<extra></extra>"
         )
         
         st.plotly_chart(fig_line, use_container_width=True)
@@ -509,6 +499,113 @@ with tab2:
                 },
                 height=300
             )
+        
+        # Nova visualização: Evolução temporal das tags
+        st.subheader("Evolução temporal das tags")
+        st.caption("Evolução do número de notícias por dia para as tags selecionadas no período filtrado.")
+        
+        # Filtro múltiplo de tags para esta visualização
+        all_tags_filtered = []
+        for tags in filtered_df_tags['tags']:
+            all_tags_filtered.extend(tags)
+        
+        unique_tags = sorted(list(set(all_tags_filtered)))
+        selected_tags_timeline = st.multiselect(
+            "Selecione as tags para visualizar",
+            options=unique_tags,
+            default=unique_tags[:5] if len(unique_tags) >= 5 else unique_tags,  # Primeiras 5 por padrão
+            help="Escolha até 5 tags para melhor visualização"
+        )
+        
+        if selected_tags_timeline:
+            # Criar dataframe completo com todas as datas do período
+            all_dates = pd.date_range(
+                start=filtered_df_tags['data'].min(),
+                end=filtered_df_tags['data'].max(),
+                freq='D'
+            )
+            
+            # Criar dataframe base com todas as datas
+            timeline_df = pd.DataFrame({'data': all_dates})
+            
+            # Para cada tag selecionada, contar frequência por data
+            for tag in selected_tags_timeline:
+                # Filtrar notícias que contêm a tag específica
+                tag_news = filtered_df_tags[filtered_df_tags['tags'].apply(lambda x: tag in x)]
+                
+                # Contar notícias por dia para esta tag
+                daily_tag_count = tag_news.groupby('data').size().reset_index(name=tag)
+                
+                # Fazer merge com o dataframe base para incluir todos os dias
+                timeline_df = timeline_df.merge(daily_tag_count, on='data', how='left')
+                
+                # Preencher valores NaN com 0
+                timeline_df[tag] = timeline_df[tag].fillna(0).astype(int)
+            
+            # Formatar datas para o eixo X
+            timeline_df['data_formatada'] = timeline_df['data'].dt.strftime('%d %b. %y').str.lower()
+            
+            # Calcular limite do eixo Y (20% maior que o valor máximo)
+            max_count = timeline_df[selected_tags_timeline].max().max()
+            y_max = max_count * 1.2 if max_count > 0 else 5
+            
+            # Criar gráfico de linha
+            fig_tag_timeline = go.Figure()
+            
+            # Cores para as tags
+            colors = ['#FF4B4B', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
+            
+            for i, tag in enumerate(selected_tags_timeline):
+                color = colors[i % len(colors)]
+                
+                fig_tag_timeline.add_trace(
+                    go.Scatter(
+                        x=timeline_df['data_formatada'],
+                        y=timeline_df[tag],
+                        name=tag,
+                        mode='lines+markers',
+                        line=dict(color=color, width=2),
+                        marker=dict(color=color, size=5),
+                        hovertemplate=f"{tag}: %{{y}}<extra></extra>"
+                    )
+                )
+            
+            fig_tag_timeline.update_layout(
+                showlegend=True,
+                height=300,
+                margin=dict(l=0, r=0, t=30, b=0),
+                hovermode='x unified',
+                plot_bgcolor="white",
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="left",
+                    x=0
+                ),
+                xaxis=dict(
+                    showgrid=False, 
+                    showspikes=False,
+                    title=None,
+                    tickangle=0,
+                    nticks=8
+                ),
+                yaxis=dict(
+                    showspikes=False,
+                    showgrid=True,
+                    gridcolor="lightgray",
+                    gridwidth=0.5,
+                    rangemode="tozero",
+                    range=[0, y_max],
+                    title=None,
+                    tickmode='linear',
+                    dtick=1
+                ),
+            )
+            
+            st.plotly_chart(fig_tag_timeline, use_container_width=True)
+        else:
+            st.info("Selecione pelo menos uma tag para visualizar a evolução temporal.")
 
 # Footer
 # st.markdown("---")
