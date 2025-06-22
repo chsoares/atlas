@@ -106,6 +106,7 @@ tab1, tab2 = st.tabs(["📋 Timeline", "📊 Dataviz"])
 with tab1:
     
     st.subheader("Filtros")
+    st.caption("Configure os filtros de data, países e tags para personalizar a visualização dos dados.")
     with st.container(border=True):
         # Filtros específicos da Timeline
         
@@ -169,6 +170,7 @@ with tab1:
     
     # Estatísticas
     st.subheader("Métricas")
+    st.caption("Resumo dos dados filtrados com estatísticas relevantes.")
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.metric("Notícias", len(filtered_df), border=True)
@@ -190,7 +192,7 @@ with tab1:
             return ""
         ribbons = []
         for tag in tags_list:
-            ribbons.append(f'<span style="background-color: #e1f5fe; color: #0277bd; padding: 2px 8px; margin: 1px; border-radius: 12px; font-size: 0.8em; display: inline-block; white-space: nowrap;">{tag}</span>')
+            ribbons.append(f'<span style="background-color: #ffebee; color: #d32f2f; padding: 2px 8px; margin: 1px; border-radius: 12px; font-size: 0.8em; display: inline-block; white-space: nowrap;">{tag}</span>')
         return ' '.join(ribbons)
     
     display_df['tags_ribbons'] = display_df['tags'].apply(create_tag_ribbons)
@@ -208,8 +210,8 @@ with tab1:
         max-width: 100%;
     }
     .tag-ribbon {
-        background-color: #e1f5fe;
-        color: #0277bd;
+        background-color: #ffebee;
+        color: #d32f2f;
         padding: 2px 8px;
         border-radius: 12px;
         font-size: 0.8em;
@@ -218,17 +220,18 @@ with tab1:
         margin: 1px;
     }
     .date-header {
-        background-color: #f0f2f6;
+        background-color: #f0f2f6 ;
         padding: 6px 6px;
         border-radius: 8px;
-        margin: 16px 0 32px 0;
-        border-left: 4px solid #1f77b4;
+        margin: 0px 0 16px 0;
+        border-left: 4px solid #FF4B4B;
     }
     </style>
     """, unsafe_allow_html=True)
     
     # Criar timeline agrupada por data
     st.subheader("Timeline")
+    st.caption("Visualização cronológica das notícias agrupadas por data, com países ordenados alfabeticamente.")
     
     # Agrupar por data (usando a data real, não a string)
     grouped_by_date = display_df.groupby('data')
@@ -249,7 +252,7 @@ with tab1:
         
         # Notícias do dia
         with st.container(border=True):
-            for idx, row in group_sorted.iterrows():
+            for idx, (row_idx, row) in enumerate(group_sorted.iterrows()):
                 with st.container():
                     col1, col2 = st.columns([1, 4])
                     
@@ -260,7 +263,13 @@ with tab1:
                         st.markdown(f"{row['texto']}")
                         st.markdown(f"<div class='tag-container'>{row['tags_ribbons']}</div>", unsafe_allow_html=True)
                     
-                    st.markdown("---")
+                    # Adicionar separador apenas se não for o último item do dia
+                    if idx < len(group_sorted) - 1:
+                        st.markdown("---")
+                    else:
+                        # Espaçamento para o último item
+                        st.write("")
+                        st.write("")
     
     
     # Botão de exportação
@@ -275,6 +284,7 @@ with tab1:
     
     # Tag cloud
     st.subheader("Tag Cloud")
+    st.caption("Visualização das tags mais frequentes no período selecionado, com tamanho proporcional à frequência.")
     with st.container(border=True):
         wordcloud = create_wordcloud(filtered_df['tags'])
         
@@ -289,170 +299,176 @@ with tab1:
 
 # Aba 2: Dataviz
 with tab2:
-    st.header("📊 Visualizações de Dados")
     
     # Estatísticas do dataset completo
-    st.subheader("📈 Estatísticas Gerais")
+    st.subheader("Métricas")
+    st.caption("Estatísticas gerais de todo o dataset de notícias.")
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric("Total de Notícias", len(df))
+        st.metric("Notícias", len(df), border=True)
     with col2:
-        st.metric("Países", len(df['pais'].unique()))
+        st.metric("Países", len(df['pais'].unique()), border=True)
     with col3:
-        st.metric("Tags Únicas", len(set([tag for tags in df['tags'] for tag in tags])))
+        st.metric("Tags", len(set([tag for tags in df['tags'] for tag in tags])), border=True)
     with col4:
-        st.metric("Período Total", f"{(df['data'].max().date() - df['data'].min().date()).days + 1} dias")
+        st.metric("Período", f"{(df['data'].max().date() - df['data'].min().date()).days + 1} dias", border=True)
     
-    st.markdown("---")
+    # Gráfico de linha - Notícias por dia
+    st.subheader("Notícias por dia")
+    st.caption("Evolução temporal do número de notícias publicadas por dia, mostrando tendências e picos de atividade.")
     
-    # Gráfico de linha - Notícias por dia (sem filtro de países)
-    st.subheader("📈 Notícias por Dia")
-    
-    # Preparar dados para o gráfico (todos os países em uma linha)
-    daily_news = df.groupby('data').size().reset_index(name='count')
-    
-    fig_line = px.line(
-        daily_news,
-        x='data',
-        y='count',
-        title='Evolução do Número de Notícias por Dia - Todos os Países',
-        labels={'data': 'Data', 'count': 'Número de Notícias'},
-        markers=True
-    )
-    
-    fig_line.update_layout(
-        xaxis_title="Data",
-        yaxis_title="Número de Notícias",
-        hovermode='x unified'
-    )
-    
-    st.plotly_chart(fig_line, use_container_width=True)
+    with st.container(border=True):
+        # Preparar dados para o gráfico (todos os países em uma linha)
+        daily_news = df.groupby('data').size().reset_index(name='count')
+        
+        fig_line = px.line(
+            daily_news,
+            x='data',
+            y='count',
+            title='',
+            labels={'data': 'Data', 'count': 'Notícias'},
+            markers=True
+        )
+        
+        fig_line.update_layout(
+            xaxis_title="",
+            yaxis_title="",
+            hovermode='x unified',
+            height=300
+        )
+        
+        st.plotly_chart(fig_line, use_container_width=True)
     
     # Choropleth map - Distribuição por país
-    st.subheader("🗺️ Distribuição por País (Mapa de Calor)")
+    st.subheader("Mapa de calor")
+    st.caption("Mapa geográfico mostrando a distribuição de notícias por país, com intensidade baseada no número de notícias.")
     
-    # Filtro de data para este gráfico específico
-    col1, col2 = st.columns(2)
-    with col1:
-        start_date_choropleth = st.date_input(
-            "Data inicial para o mapa",
-            value=df['data'].min().date(),
-            min_value=df['data'].min().date(),
-            max_value=df['data'].max().date(),
-            format="DD/MM/YYYY"
+    with st.container(border=True):
+        # Filtro de data para este gráfico específico
+        col1, col2 = st.columns(2)
+        with col1:
+            start_date_choropleth = st.date_input(
+                "Data inicial para o mapa",
+                value=df['data'].min().date(),
+                min_value=df['data'].min().date(),
+                max_value=df['data'].max().date(),
+                format="DD/MM/YYYY"
+            )
+        with col2:
+            end_date_choropleth = st.date_input(
+                "Data final para o mapa",
+                value=df['data'].max().date(),
+                min_value=df['data'].min().date(),
+                max_value=df['data'].max().date(),
+                format="DD/MM/YYYY"
+            )
+        
+        # Aplicar filtro de data para o choropleth
+        start_date_choropleth = pd.Timestamp(start_date_choropleth)
+        end_date_choropleth = pd.Timestamp(end_date_choropleth)
+        
+        filtered_df_choropleth = df[
+            (df['data'] >= start_date_choropleth) & 
+            (df['data'] <= end_date_choropleth)
+        ]
+        
+        country_counts_choropleth = filtered_df_choropleth['pais'].value_counts().reset_index()
+        country_counts_choropleth.columns = ['País', 'Notícias']
+        
+        # Adicionar códigos ISO do novo formato
+        country_counts_choropleth['iso_alpha'] = country_counts_choropleth['País'].map(
+            lambda x: country_emojis.get(x, {}).get('iso', '')
         )
-    with col2:
-        end_date_choropleth = st.date_input(
-            "Data final para o mapa",
-            value=df['data'].max().date(),
-            min_value=df['data'].min().date(),
-            max_value=df['data'].max().date(),
-            format="DD/MM/YYYY"
+        
+        fig_choropleth = px.choropleth(
+            country_counts_choropleth,
+            locations='iso_alpha',
+            color='Notícias',
+            hover_name='País',
+            color_continuous_scale='viridis',
+            title=""
         )
-    
-    # Aplicar filtro de data para o choropleth
-    start_date_choropleth = pd.Timestamp(start_date_choropleth)
-    end_date_choropleth = pd.Timestamp(end_date_choropleth)
-    
-    filtered_df_choropleth = df[
-        (df['data'] >= start_date_choropleth) & 
-        (df['data'] <= end_date_choropleth)
-    ]
-    
-    country_counts_choropleth = filtered_df_choropleth['pais'].value_counts().reset_index()
-    country_counts_choropleth.columns = ['País', 'Notícias']
-    
-    # Adicionar códigos ISO do novo formato
-    country_counts_choropleth['iso_alpha'] = country_counts_choropleth['País'].map(
-        lambda x: country_emojis.get(x, {}).get('iso', '')
-    )
-    
-    fig_choropleth = px.choropleth(
-        country_counts_choropleth,
-        locations='iso_alpha',
-        color='Notícias',
-        hover_name='País',
-        color_continuous_scale='viridis',
-        title=f'Distribuição de Notícias por País ({start_date_choropleth.strftime("%d/%m/%Y")} a {end_date_choropleth.strftime("%d/%m/%Y")})'
-    )
-    
-    fig_choropleth.update_layout(
-        geo=dict(
-            showframe=False,
-            showcoastlines=True,
-            projection_type='equirectangular'
+        
+        fig_choropleth.update_layout(
+            geo=dict(
+                showframe=False,
+                showcoastlines=True,
+                projection_type='equirectangular'
+            )
         )
-    )
-    
-    st.plotly_chart(fig_choropleth, use_container_width=True)
+        
+        st.plotly_chart(fig_choropleth, use_container_width=True)
     
     # Distribuição por tags
-    st.subheader("🏷️ Distribuição por Tags")
+    st.subheader("Distribuição por tags")
+    st.caption("Análise das tags mais frequentes no período selecionado, com visualização em nuvem de palavras e tabela de frequências.")
     
-    # Filtro de data para este gráfico específico
-    col1, col2 = st.columns(2)
-    with col1:
-        start_date_tags = st.date_input(
-            "Data inicial para tags",
-            value=df['data'].min().date(),
-            min_value=df['data'].min().date(),
-            max_value=df['data'].max().date(),
-            format="DD/MM/YYYY"
-        )
-    with col2:
-        end_date_tags = st.date_input(
-            "Data final para tags",
-            value=df['data'].max().date(),
-            min_value=df['data'].min().date(),
-            max_value=df['data'].max().date(),
-            format="DD/MM/YYYY"
-        )
-    
-    # Aplicar filtro de data para tags
-    start_date_tags = pd.Timestamp(start_date_tags)
-    end_date_tags = pd.Timestamp(end_date_tags)
-    
-    filtered_df_tags = df[
-        (df['data'] >= start_date_tags) & 
-        (df['data'] <= end_date_tags)
-    ]
-    
-    # Duas colunas: wordcloud e tabela
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("☁️ Tag Cloud")
-        wordcloud_viz = create_wordcloud(filtered_df_tags['tags'])
+    with st.container(border=True):
+        # Filtro de data para este gráfico específico
+        col1, col2 = st.columns(2)
+        with col1:
+            start_date_tags = st.date_input(
+                "Data inicial para tags",
+                value=df['data'].min().date(),
+                min_value=df['data'].min().date(),
+                max_value=df['data'].max().date(),
+                format="DD/MM/YYYY"
+            )
+        with col2:
+            end_date_tags = st.date_input(
+                "Data final para tags",
+                value=df['data'].max().date(),
+                min_value=df['data'].min().date(),
+                max_value=df['data'].max().date(),
+                format="DD/MM/YYYY"
+            )
         
-        if wordcloud_viz:
-            fig2, ax2 = plt.subplots(figsize=(8, 6))
-            ax2.imshow(wordcloud_viz, interpolation='bilinear')
-            ax2.axis('off')
-            st.pyplot(fig2)
-        else:
-            st.info("Não há dados suficientes para gerar a tag cloud.")
-    
-    with col2:
-        st.subheader("📊 Tabela de Tags")
+        # Aplicar filtro de data para tags
+        start_date_tags = pd.Timestamp(start_date_tags)
+        end_date_tags = pd.Timestamp(end_date_tags)
         
-        # Contar frequência das tags
-        all_tags_filtered = []
-        for tags in filtered_df_tags['tags']:
-            all_tags_filtered.extend(tags)
+        filtered_df_tags = df[
+            (df['data'] >= start_date_tags) & 
+            (df['data'] <= end_date_tags)
+        ]
         
-        tag_counts = pd.Series(all_tags_filtered).value_counts().reset_index()
-        tag_counts.columns = ['Tag', 'Frequência']
+        # Duas colunas: wordcloud e tabela
+        col1, col2 = st.columns(2)
         
-        # Exibir tabela
-        st.dataframe(
-            tag_counts,
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Tag": st.column_config.TextColumn("Tag", width="medium"),
-                "Frequência": st.column_config.NumberColumn("Frequência", width="small")
-            }
-        )
+        with col1:
+            #st.subheader("Tag Cloud")
+            wordcloud_viz = create_wordcloud(filtered_df_tags['tags'])
+            
+            if wordcloud_viz:
+                fig2, ax2 = plt.subplots(figsize=(8, 6))
+                ax2.imshow(wordcloud_viz, interpolation='bilinear')
+                ax2.axis('off')
+                st.pyplot(fig2)
+            else:
+                st.info("Não há dados suficientes para gerar a tag cloud.")
+        
+        with col2:
+            #st.subheader("Tabela de Tags")
+            
+            # Contar frequência das tags
+            all_tags_filtered = []
+            for tags in filtered_df_tags['tags']:
+                all_tags_filtered.extend(tags)
+            
+            tag_counts = pd.Series(all_tags_filtered).value_counts().reset_index()
+            tag_counts.columns = ['Tag', 'Frequência']
+            
+            # Exibir tabela
+            st.dataframe(
+                tag_counts,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "Tag": st.column_config.TextColumn("Tag", width="medium"),
+                    "Frequência": st.column_config.NumberColumn("Frequência", width="small")
+                },
+                height=300
+            )
 
 # Footer
 # st.markdown("---")
