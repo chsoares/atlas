@@ -1,29 +1,33 @@
 # 🗺️ Atlas Diário
 
-Uma aplicação para análise e acompanhamento de eventos de interesse em notícias diárias globais, permitindo filtragem, visualização e exportação de dados de forma intuitiva.
+Uma aplicação interativa para análise e visualização de notícias globais de segurança cibernética, desenvolvida com Streamlit e Plotly. Permite acompanhar eventos em tempo real, filtrar dados por período, países e tags, e gerar insights através de visualizações dinâmicas.
 
 ## 📋 Funcionalidades
 
 ### Aba Timeline
-- **Filtros globais:** Data inicial/final, seleção múltipla de países e tags
-- **Tabela interativa:** Exibe notícias com data, país (com emoji), texto completo e tags
-- **Paginação:** Navegação por páginas para melhor performance
-- **Tag Cloud:** Visualização das tags mais frequentes no período selecionado
+- **Filtros avançados:** Data inicial/final, seleção múltipla de países e tags
+- **Métricas em tempo real:** Contadores de notícias, países, tags e período
+- **Timeline interativa:** Visualização cronológica agrupada por data com países ordenados alfabeticamente
+- **Tags estilizadas:** Ribbons coloridos para melhor identificação visual
+- **Evolução temporal das tags:** Gráfico de linha com filtro múltiplo de tags selecionadas
+- **Tag Cloud:** Visualização das tags mais frequentes no período
 - **Exportação:** Download dos dados filtrados em formato CSV
 
 ### Aba Dataviz
-- **Gráfico de linha:** Evolução do número de notícias por dia
-- **Distribuição por país:** Top 15 países com mais notícias
-- **Tags mais frequentes:** Ranking das tags mais utilizadas
-- **Tag Cloud:** Visualização interativa das tags do período
+- **Métricas gerais:** Estatísticas do dataset completo
+- **Gráfico de linha temporal:** Evolução do número de notícias por dia com design otimizado
+- **Mapa de calor geográfico:** Distribuição de notícias por país usando choropleth
+- **Análise de tags:** Word cloud e tabela de frequências com filtros de data
+- **Design consistente:** Visualizações com tema unificado e cores do Streamlit
 
 ## 🛠️ Tecnologias
 
 - **Frontend & Backend:** Streamlit
 - **Manipulação de dados:** Pandas
-- **Visualizações:** Plotly
+- **Visualizações:** Plotly (go.Figure, px.line, px.choropleth)
 - **Word Cloud:** WordCloud + Matplotlib
 - **Formato dos dados:** JSON
+- **Estilização:** CSS customizado
 
 ## 🚀 Instalação e Uso
 
@@ -38,8 +42,8 @@ python data_generator.py
 ```
 
 Este comando irá gerar:
-- `news_data.json` - Dataset com 90 dias de notícias (20-50 por dia)
-- `country_emojis.json` - Mapeamento de países para emojis
+- `news_data.json` - Dataset com 90 dias de notícias (10-50 por dia)
+- `country_emojis.json` - Mapeamento de 80 países para emojis e códigos ISO
 
 ### 3. Executar a aplicação
 ```bash
@@ -51,16 +55,21 @@ A aplicação estará disponível em `http://localhost:8501`
 ## 📊 Características dos Dados
 
 ### Dataset de Teste
-- **Período:** 90 dias consecutivos
-- **Notícias por dia:** 20 a 50
-- **Países:** 20 países diferentes (máximo 1 notícia por país/dia)
-- **Tags:** 1 a 3 tags por notícia (tags de 1-2 palavras)
-- **Hotspots:** Países e tags com maior concentração de notícias
+- **Período:** 90 dias consecutivos (1º de janeiro a 31 de março de 2025)
+- **Notícias por dia:** 10 a 50 (com variação realística)
+- **Países:** 80 países diferentes (máximo 1 notícia por país/dia)
+- **Tags:** 1 a 3 tags por notícia (25 tags diferentes)
+- **Variação temporal:** Fins de semana com menos atividade, crises e picos aleatórios
 
-### Continuidade de Eventos
-- Eventos podem se estender por vários dias
-- Notícias consecutivas para o mesmo país podem complementar eventos anteriores
-- Cria narrativas sequenciais para simular investigações reais
+### Padrões Realísticos
+- **Fins de semana:** 30% menos notícias
+- **Crises:** 150% mais notícias (10% de chance)
+- **Picos aleatórios:** 80% mais notícias (5% de chance)
+- **Continuidade de eventos:** Notícias consecutivas para o mesmo país
+
+### Hotspots Implementados
+- **Países prioritários:** Estados Unidos, Brasil, Rússia, China (80% de chance)
+- **Tags prioritárias:** ransomware, ciberataque, vazamento dados, setor financeiro (70% de chance)
 
 ### Estrutura dos Dados
 ```json
@@ -74,72 +83,30 @@ A aplicação estará disponível em `http://localhost:8501`
 ]
 ```
 
-## 🎯 Hotspots Implementados
 
-### Países com Mais Atividade
-- Estados Unidos 🇺🇸
-- Brasil 🇧🇷
-- Rússia 🇷🇺
-- China 🇨🇳
-
-### Tags Mais Frequentes
-- ransomware
-- ciberataque
-- vazamento dados
-- setor financeiro
-
-## 📱 Interface
-
-### Sidebar - Filtros Globais
-- **Período:** Seleção de data inicial e final
-- **Países:** Seleção múltipla de países
-- **Tags:** Seleção múltipla de tags
-
-### Aba Timeline
-- Estatísticas resumidas
-- Tabela paginada com notícias
-- Tag cloud interativa
-- Botão de exportação CSV
-
-### Aba Dataviz
-- Gráfico de linha temporal
-- Gráfico de barras por país
-- Gráfico de barras por tags
-- Tag cloud do período
 
 ## 🔧 Personalização
 
 ### Adicionar Novos Países
-Edite o arquivo `data_generator.py` e adicione países na lista `self.countries` e seus respectivos emojis em `self.country_emojis`.
+Edite o arquivo `data_generator.py`:
+```python
+self.countries = ["Novo País", ...]
+self.country_emojis = {
+    "Novo País": {"emoji": "🏳️", "iso": "XXX"},
+    ...
+}
+```
 
 ### Adicionar Novas Tags
-Adicione novas tags na lista `self.tags` do gerador de dados.
+```python
+self.tags = ["nova tag", ...]
+```
 
 ### Modificar Templates de Notícias
 Edite os dicionários `templates` e `continuation_templates` na função `generate_news_text()`.
 
-## 📈 Análise de Dados
-
-A aplicação permite:
-- Identificar picos de atividade por país
-- Acompanhar evolução de eventos ao longo do tempo
-- Analisar distribuição de tags e temas
-- Exportar dados para análise externa
-- Visualizar hotspots de atividade
-
-## 🤝 Contribuição
-
-Para contribuir com o projeto:
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature
-3. Implemente as mudanças
-4. Teste a aplicação
-5. Envie um pull request
-
-## 📄 Licença
-
-Este projeto está sob licença MIT. Veja o arquivo LICENSE para mais detalhes.
-
----
-
-**Desenvolvido com ❤️ usando Streamlit, Pandas e Plotly** 
+### Ajustar Variação Temporal
+Modifique os parâmetros na função `generate_dataset()`:
+- Probabilidade de crise: `random.random() < 0.1`
+- Probabilidade de pico: `random.random() < 0.05`
+- Redução em fins de semana: `base_news * 0.7`
