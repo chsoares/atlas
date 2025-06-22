@@ -12,13 +12,13 @@ from wordcloud import WordCloud
 
 # Configuração da página
 st.set_page_config(
-    page_title="Atlas Diário",
+    page_title="Atlas",
     page_icon="🗺️",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-st.title("🗺️ Atlas Diário")
+st.title("🗺️ Atlas")
 #st.caption("Visualização de acontecimentos mundiais de interesse")
 
 # Carregar CSS
@@ -281,7 +281,8 @@ with tab1:
         label="📥 Exportar dados (.csv)",
         data=csv,
         file_name=f"atlas_diario_{start_date.date()}_{end_date.date()}.csv",
-        mime="text/csv"
+        mime="text/csv",
+        type="tertiary"
     )
     
  
@@ -606,13 +607,13 @@ with tab2:
             st.info("Selecione pelo menos uma tag para visualizar a evolução temporal.")
 
 # Footer
-# st.markdown("---")
-# st.markdown(
-#     """
-#     <div style='text-align: center; color: #666;'>
-#         <p>🗺️ <strong>Atlas Diário</strong> - Análise de Notícias Globais</p>
-#         <p>Desenvolvido com Streamlit, Pandas e Plotly</p>
-#     </div>
-#     """,
-#     unsafe_allow_html=True
-# ) 
+# st.write("---")
+with st.container(border=True):
+    st.markdown(
+        """
+        <div style='text-align: center; color: #666;'>
+            <p>🗺️ <strong>Atlas </strong>. Desenvolvido com ❤️ por ████████</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    ) 

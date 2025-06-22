@@ -1,4 +1,4 @@
-# 🗺️ Atlas Diário
+# 🗺️ Atlas
 
 Uma aplicação interativa para análise e visualização de notícias globais de segurança cibernética, desenvolvida com Streamlit e Plotly. Permite acompanhar eventos em tempo real, filtrar dados por período, países e tags, e gerar insights através de visualizações dinâmicas.
 
